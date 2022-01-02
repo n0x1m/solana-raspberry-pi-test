@@ -1,12 +1,13 @@
 [programs.localnet]
-solana_raspberry_pi_test = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+solana_raspberry_pi_test = "A26MswuiAAvKvqX2i8sDf1YPBT6cRwDPyLvm7P5rgaD4"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
-cluster = "localnet"
-wallet = "/Users/a0069bgl/.config/solana/id.json"
+cluster = "http://10.3.141.135:8899"
+wallet = "~/.config/solana/id.json"
 
 [scripts]
-test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+test = "anchor build && anchor run deploy && yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+deploy ="scp ./target/deploy/* ubuntu@10.3.141.135:/tmp/ && ssh ubuntu@10.3.141.135 /home/ubuntu/solana-1.9.2/bin/solana program deploy --program-id /tmp/solana_raspberry_pi_test-keypair.json /tmp/solana_raspberry_pi_test.so"
